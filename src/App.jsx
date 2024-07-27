@@ -1,6 +1,7 @@
 //sintaxe JSX
 import  { useState } from 'react';
 import { v4 as uuid } from 'uuid';
+import  {Container} from './styles.js'
 
 
 function App() {
@@ -26,7 +27,7 @@ function App() {
   }
   return (
     <>
-      <div>
+      <Container>
         <input onChange={inputMudou} placeholder="O que tem para fazer..." />
         <button onClick={cliqueiNoBotao}>Adicionar</button>
 
@@ -38,7 +39,7 @@ function App() {
             ))
           }
         </ul>
-      </div>
+      </Container>
     </>
   )
 }
