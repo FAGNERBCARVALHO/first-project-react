@@ -1,8 +1,8 @@
 //sintaxe JSX
 import { useState } from 'react';
 import { v4 as uuid } from 'uuid';
-import { FcEmptyTrash, FcCheckmark} from 'react-icons/fc';
-import { Container, TodoList, Input, Button, ListItem } from './styles.js';
+
+import { Container, TodoList, Input, Button, ListItem, Trash, Checkmark } from './styles.js';
 
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
   /*const list = [{id: uuid(), task:"Levar o kiko para passear"},
     {id: uuid(), task:"Terminar as  aulas do DevClub"}
   ]*/
-  const [list, setList] = useState([{ id: uuid(), task: "Levar o kiko para passear" }]);// para alterar o valor usa-se o setLIst alterar o valor do primeiro
+  const [list, setList] = useState([]);// para alterar o valor usa-se o setLIst alterar o valor do primeiro
   const [inputTask, setInputTask] = useState("")
 
   //'', 'Comprar Abacate', ''
@@ -23,9 +23,28 @@ function App() {
 
   }
   function cliqueiNoBotao() {
-    setList([...list, { id: uuid(), task: inputTask }])
+    if (inputTask) {
+      setList([...list, { id: uuid(), task: inputTask, finished: false }])
+    }
     console.log(cliqueiNoBotao)
   }
+
+  function finalizarTarefa(id) {
+
+    const newList = list.map(item => (
+      item.id === id ? { ...item, finished: !item.finished } : item
+    ))
+
+    setList(newList)
+    console.log(newList)
+  }
+  function deleteItem(id) {
+
+    const newList = list.filter( item => item.id ≠ id)
+    setList(newList)
+
+  }
+
   return (
     <>
       <Container>
@@ -36,14 +55,17 @@ function App() {
 
           <ul>
             {
-            list.map((item) => (
-              
-              <ListItem>
-                <FcCheckmark />
-                <li key={item.id}>{item.task} </li>
-                <FcEmptyTrash />
-              </ListItem>
-            ))}
+              list.length > 0 ? (
+                list.map((item) => (
+
+                  <ListItem isfinished={item.finished} key={item.id}>
+                    <Checkmark onClick={() => finalizarTarefa(item.id)} />
+                    <li >{item.task} </li>
+                    <Trash onClick={() => deleteItem(item.id)} />
+                  </ListItem>
+                ))
+              ) : (<h3> Não há itens na lista </h3>)
+            }
           </ul>
         </TodoList>
 
