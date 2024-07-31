@@ -40,7 +40,7 @@ function App() {
   }
   function deleteItem(id) {
 
-    const newList = list.filter( item => item.id ≠ id)
+    const newList = list.filter(item => item.id !== id)
     setList(newList)
 
   }
